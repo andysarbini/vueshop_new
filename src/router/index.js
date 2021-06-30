@@ -23,6 +23,11 @@ const routes = [
     name: 'categories',
     component: () => import(/* WebpackChunkName: "categories" */'../views/Categories.vue')
 },
+  {
+    path: '/books',
+    name: 'books',
+    component: () => import(/* WebpackChunkName: "categories" */'../views/Books.vue')
+},
 ]
 
 const router = new VueRouter({
