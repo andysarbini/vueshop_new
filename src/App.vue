@@ -47,7 +47,7 @@
       <v-btn icon to="/about">
         <v-badge color="orange overlap">
           <template v-slot:badge>
-            <span>3</span>
+            <span>1</span>
           </template>
         </v-badge>
         <v-icon>mdi-cart</v-icon>
@@ -176,14 +176,14 @@
         { title: 'Home', icon: 'mdi-home', route: '/'},
         { title: 'About', icon: 'mdi-account', route: '/about'},
       ],
-      guest: false,
+      guest: false
+
+  }),
       computed: {
         isHome() {
           return (this.$route.path==='/')
         },
       }
-
-  })
   };
 
 </script>
