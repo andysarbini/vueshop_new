@@ -32,19 +32,19 @@ export default new VueRouter({
           path: '/books',
           name: 'books',
           component: () => import(/* WebpackChunkName: "books" */'./views/Books.vue')
+      },
+        {
+          path: '/category/:slug',
+          name: 'category',
+          component: () => import(/* WebpackChunkName: "category" */'./views/Category.vue')
+      },
+      {
+        path: '/book/:slug',
+        name: 'book',
+        component: () => import(/* WebpackChunkName: "book" */'./views/Book.vue')
       }
     ]
 })
-//   {
-//     path: '/category/:slug',
-//     name: 'category',
-//     component: () => import(/* WebpackChunkName: "category" */'./views/Category.vue')
-// },
-// {
-//   path: '/book/:slug',
-//   name: 'book',
-//   component: () => import(/* WebpackChunkName: "book" */'./views/Book.vue')
-// },
 // ]
 
 // const router = new VueRouter({
