@@ -50,7 +50,10 @@ export default ({
         }
     },
     getters: {
-        carts : state => state.carts
+        carts : state => state.carts,
+        count : (state) => {
+            return state.carts.length
+        },
     }
 
 })

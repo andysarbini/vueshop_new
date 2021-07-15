@@ -47,8 +47,8 @@
 
       <v-btn icon to="/about">
         <v-badge color="orange overlap">
-          <template v-slot:badge>
-            <span>1</span>
+          <template v-slot:badge v-if="countCart>0">
+            <span>{{ countCart }}</span>
           </template>
         </v-badge>
         <v-icon>mdi-cart</v-icon>
@@ -78,8 +78,8 @@
       <v-spacer></v-spacer>
       <v-btn icon to="/about">
         <v-badge color="orange" overlap>
-          <template v-slot:badge>
-            <span>3</span>
+          <template v-slot:badge v-if="countCart>0">
+            <span>{{ countCart }}</span>
           </template>
           <v-icon>mdi-cart</v-icon>
         </v-badge>
@@ -169,6 +169,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
   export default {
     name: 'App',
     components: {
@@ -188,6 +189,9 @@
         isHome() {
           return (this.$route.path==='/')
         },
+        ...mapGetters({
+          countCart : 'cart/count'
+        }),
       }
   };
 
