@@ -1,5 +1,8 @@
 <template>
     <div>
+
+
+
         <v-card v-if="book.slug">
             <v-img class="white--text"
                 :src="getImage('/books/'+book.cover)"
@@ -70,6 +73,8 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
+
     export default {
         data: () => ({
             book: {}, // objek book
@@ -77,7 +82,23 @@
         created() {
             this.go()
         },
-        methods: {
+        methods: {          
+            ...mapActions({
+                addCart: 'cart/add',
+                setAlert : 'alert/set'
+            }),
+                
+            buy() {
+                // alert('buy')
+                // this.$store.dispatch('add', this.book)
+                this.addCart(this.book)
+                this.setAlert({
+                    status : true,
+                    color : 'success',
+                    text : 'Added to cart'
+                })
+            },
+    
             go() {
                 let { slug } = this.$route.params
                 let url = '/books/slug/'+slug
@@ -93,9 +114,6 @@
                     console.log(responses)
                 })
             },
-            buy() {
-                alert('buy')
-            }
         }
 };
 </script>

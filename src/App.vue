@@ -1,5 +1,6 @@
 <template>
   <v-app>
+<alert />
     <v-app-bar
       app
       color="primary"
@@ -169,7 +170,11 @@
 
 <script>
   export default {
-    name: 'App',  
+    name: 'App',
+    components: {
+      Alert: () => import( /* webpackChunkName: "alert" */
+      '@/components/Alert.vue')
+    },  
     data: () => ({
       drawer: false,
       menus: [
