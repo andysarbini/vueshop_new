@@ -1,6 +1,11 @@
 <template>
   <v-app>
-<alert />
+    <alert />
+
+    <v-dialog v-model="dialog" fullscreen hide-overlay transition="scale-transition">
+      <search @closed="closeDialog" />
+    </v-dialog>
+
     <v-app-bar
       app
       color="primary"
@@ -54,13 +59,15 @@
         <v-icon>mdi-cart</v-icon>
       </v-btn>
 
-      <v-text-field slot="extension"
+      <v-text-field 
+      slot="extension"
       hide-details
       append-icon="mdi-microphone"
-      flat
+      
       label="Search"
       prepend-inner-icon="mdi-magnify"
-      solo-inverted>
+      solo-inverted flat
+      @click="dialog = true">
       </v-text-field>
     
     </v-app-bar>
@@ -174,9 +181,12 @@ import { mapGetters } from 'vuex';
     name: 'App',
     components: {
       Alert: () => import( /* webpackChunkName: "alert" */
-      '@/components/Alert.vue')
+      '@/components/Alert.vue'),
+      Search: () => import(/* webpackChunkName: "search" */
+      '@/components/Search.vue')
     },  
     data: () => ({
+      dialog: false,
       drawer: false,
       menus: [
         { title: 'Home', icon: 'mdi-home', route: '/'},
@@ -185,6 +195,11 @@ import { mapGetters } from 'vuex';
       guest: false
 
   }),
+  methods: {
+    closeDialog (value) {
+      this.dialog = value
+    }
+  },
       computed: {
         isHome() {
           return (this.$route.path==='/')
