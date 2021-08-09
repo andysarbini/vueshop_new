@@ -105,11 +105,11 @@
         <v-list>
           <v-list-item v-if="!guest">
             <v-list-item-avatar>
-              <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+              <v-img src="getImage('/users/'+user.avatar)" />
             </v-list-item-avatar>
             
             <v-list-item-content>
-              <v-list-item-title>John Leider</v-list-item-title>
+              <v-list-item-title>{{ user.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -143,7 +143,7 @@
 
         <template v-slot:append v-if="!guest">
         <div class="pa-2">
-            <v-btn block color="red" dark>
+            <v-btn block color="red" dark @click="logout">
               <v-icon left>mdi-lock</v-icon>
               Logout
             </v-btn>
@@ -206,7 +206,33 @@ import { mapActions, mapGetters } from 'vuex';
     ...mapActions({
       setDialogStatus : 'dialog/setStatus',
       setDialogComponent : 'dialog/setComponent',
+      setAuth : 'auth/set',
+      setAlert : 'alert/set',
     }),
+    logout() {
+      let config = {
+        headers: {
+          'Authorization': 'Bearer ' + this.user.api_token,
+        },
+      }
+      this.axios.post('/logout', {}, config)
+        .then((response) => {
+          this.setAuth({}) // kosongkan auth ketika logout
+          this.setAlert({
+            status : true,
+            color : 'success',
+            text : 'Logout successfully',
+          })
+        })
+        .catch((error) => {
+          let {data} = error.response
+          this.setAlert({
+            status : true,
+            color : 'error',
+            text : data.message,
+          })
+        })
+    }
     // closeDialog (value) {
     //   this.dialog = value
     // }
