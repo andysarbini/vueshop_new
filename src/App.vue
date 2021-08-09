@@ -2,9 +2,14 @@
   <v-app>
     <alert />
 
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="scale-transition">
+    <!-- <v-dialog v-model="dialog" fullscreen hide-overlay transition="scale-transition">
       <search @closed="closeDialog" />
-    </v-dialog>
+    </v-dialog> -->
+    <keep-alive>
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <component :is="currentComponent" @closed="setDialogStatus"></component>
+      </v-dialog>
+    </keep-alive>
 
     <v-app-bar
       app
@@ -63,11 +68,10 @@
       slot="extension"
       hide-details
       append-icon="mdi-microphone"
-      
+      solo-inverted flat
       label="Search"
       prepend-inner-icon="mdi-magnify"
-      solo-inverted flat
-      @click="dialog = true">
+      @click="setDialogComponent('search')">
       </v-text-field>
     
     </v-app-bar>
@@ -110,7 +114,8 @@
           </v-list-item>
 
             <div class="pa-2" v-if="guest">
-              <v-btn block color="primary" class="mb-1">
+              <v-btn block color="primary" class="mb-1"
+              @click="setDialogComponent('login')">
                 <v-icon left>mdi-lock</v-icon>
                 Login
               </v-btn>
@@ -176,38 +181,56 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
   export default {
     name: 'App',
     components: {
       Alert: () => import( /* webpackChunkName: "alert" */
       '@/components/Alert.vue'),
       Search: () => import(/* webpackChunkName: "search" */
-      '@/components/Search.vue')
+      '@/components/Search.vue'),
+      Login: () => import( /* webpackChunkName: "login" */
+      '@/components/Login.vue'),
     },  
     data: () => ({
-      dialog: false,
+      // dialog: false,
       drawer: false,
       menus: [
         { title: 'Home', icon: 'mdi-home', route: '/'},
         { title: 'About', icon: 'mdi-account', route: '/about'},
       ],
-      guest: false
+      // guest: false
 
   }),
   methods: {
-    closeDialog (value) {
-      this.dialog = value
-    }
+    ...mapActions({
+      setDialogStatus : 'dialog/setStatus',
+      setDialogComponent : 'dialog/setComponent',
+    }),
+    // closeDialog (value) {
+    //   this.dialog = value
+    // }
   },
       computed: {
         isHome() {
           return (this.$route.path==='/')
         },
         ...mapGetters({
-          countCart : 'cart/count'
+          countCart : 'cart/count',
+          guest : 'auth/guest',
+          user : 'auth/user',
+          dialogStatus : 'dialog/status',
+          currentComponent: 'dialog/component',
         }),
-      }
+        dialog: {
+          get () {
+            return this.dialogStatus
+          },
+          set (value) {
+            this.setDialogStatus(value)
+          }
+        }
+      },
   };
 
 </script>
