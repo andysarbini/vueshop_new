@@ -119,7 +119,7 @@
                 <v-icon left>mdi-lock</v-icon>
                 Login
               </v-btn>
-              <v-btn block color="success">
+              <v-btn block color="success" @click="setDialogComponent('register')">
                 <v-icon left>mdi-account</v-icon>
                 Register
               </v-btn>              
@@ -191,6 +191,8 @@ import { mapActions, mapGetters } from 'vuex';
       '@/components/Search.vue'),
       Login: () => import( /* webpackChunkName: "login" */
       '@/components/Login.vue'),
+      Register: () => import(/* webpackChunkName: "register" */
+      '@/components/Register.vue')
     },  
     data: () => ({
       // dialog: false,
