@@ -55,7 +55,7 @@
       <!-- pemisah konten -->
       <v-spacer></v-spacer>
 
-      <v-btn icon to="/about">
+      <v-btn icon @click="setDialogComponent('cart')">
         <v-badge color="orange overlap">
           <template v-slot:badge v-if="countCart>0">
             <span>{{ countCart }}</span>
@@ -87,7 +87,7 @@
 
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn icon to="/about">
+      <v-btn icon @click="setDialogComponent('cart')">
         <v-badge color="orange" overlap>
           <template v-slot:badge v-if="countCart>0">
             <span>{{ countCart }}</span>

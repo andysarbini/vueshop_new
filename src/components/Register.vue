@@ -28,7 +28,8 @@
                 <v-text-field
                     v-model="password"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="showPassword ? 'text' : 'password'"
+                    :rules="passwordRules"
+                    :type="showPassword ? 'text' : 'password'"
                     label="Password"
                     hint="At least 6 charackters"
                     counter
@@ -37,7 +38,7 @@
                 <v-checkbox
                     v-model="checkbox"
                     :rules="[v => !!v || 'You must agree to continue!']"
-                    label for="Do You agree with our Privacy Policy?"
+                    label ="Do You agree with our Privacy Policy?"
                     required>
                 </v-checkbox>
                 <div class="text-xs-center">

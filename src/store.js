@@ -28,7 +28,8 @@ export default new Vuex.Store({
         cart,
         alert,
         auth,
-        dialog
+        dialog,
+        region
     }
 
 })
