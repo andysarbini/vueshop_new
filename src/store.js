@@ -13,16 +13,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         carts : [],
+        prevUrl: '',
     },
     mutations: {
         
-       
+       setPrevUrl: (state, value) => {
+           state.prevUrl = value
+       }
     },
     actions: {
        
+        setPrevUrl: ({commit}, value) => {
+            commit('setPrevUrl', value)
+        },
     },
     getters: {
-        carts : state => state.carts
+        carts : state => state.carts,
+        prevUrl: state => state.prevUrl,
     },
     modules: {
         cart,
